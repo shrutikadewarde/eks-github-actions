@@ -11,8 +11,7 @@ terraform {
     region         = "ap-south-1"
     key            = "eks/terraform.tfstate"
     encrypt        = true
-    use_lock_table = {
-      table = "Lock-files"
+    dynamodb_table = "Lock-files"
   }
 }
 
