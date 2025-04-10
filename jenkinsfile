@@ -24,7 +24,7 @@ pipeline {
         }
         stage('Init') {
             steps {
-                withAWS(credentials: 'aws-creds', region: 'us-east-1') {
+                withAWS(credentials: 'aws-credentials', region: 'ap-south-1') {
                 sh '''
                 echo "Running terraform Init"
                 cd EKS
@@ -35,7 +35,7 @@ pipeline {
         }
         stage('Validate') {
             steps {
-                withAWS(credentials: 'aws-creds', region: 'us-east-1') {
+                withAWS(credentials: 'aws-credentials', region: 'ap-south-1') {
                 sh 'terraform -chdir=eks/ validate'
                 }
             }
