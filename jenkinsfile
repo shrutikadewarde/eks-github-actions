@@ -28,7 +28,7 @@ pipeline {
                 sh '''
                 echo "Running terraform Init"
                 cd EKS
-                terraform Init -reconfigure
+                terraform init -reconfigure
                 '''
                 }
             }
