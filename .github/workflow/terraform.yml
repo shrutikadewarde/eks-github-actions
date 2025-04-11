@@ -18,7 +18,7 @@ on:
         default: 'apply'
 
 env:
-      AWS_REGION: us-east-2
+      AWS_REGION: ap-south-1
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
@@ -50,7 +50,7 @@ jobs:
         working-directory: eks
 
     env:
-      AWS_REGION: us-east-2
+      AWS_REGION: ap-south-1
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     
@@ -91,7 +91,7 @@ jobs:
       
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
-      working-directory: eks
+      working-directory: EKS
       run: terraform init
 
   Terraform-Formatting-Validating:
@@ -109,16 +109,16 @@ jobs:
         terraform_version: 1.9.3
         
     - name: Terraform Init
-      working-directory: eks
+      working-directory: EKS
       run: terraform init
       
     # Checks that all Terraform configuration files adhere to a canonical format
     - name: Terraform Format
-      working-directory: eks
+      working-directory: EKS
       run: terraform fmt
 
     - name: Terraform Validate
-      working-directory: eks
+      working-directory: EKS
       run: terraform validate
 
   Terraform-Action:
@@ -136,13 +136,13 @@ jobs:
         terraform_version: 1.9.3
 
     - name: Terraform Init
-      working-directory: eks
+      working-directory: EKS
       run: terraform init
 
       
     - name: Terraform Plan
       if: ${{ github.event.inputs.action  == 'plan' }}
-      working-directory: eks
+      working-directory: EKS
       # Generates an execution plan for Terraform
       run: |
         terraform plan -var-file=${{ github.event.inputs.tfvars_file }} -input=false
@@ -151,10 +151,10 @@ jobs:
       # Apply the Terraform Configuration according to the parameter
     - name: Terraform Action
       if: ${{ github.event.inputs.action  == 'apply' }}
-      working-directory: eks
+      working-directory: EKS
       run: terraform ${{ github.event.inputs.action }} -auto-approve -var-file=${{ github.event.inputs.tfvars_file }} -input=false
 
     - name: Terraform Destroy
       if: ${{ github.event.inputs.action == 'destroy' }}
-      working-directory: eks
+      working-directory: EKS
       run: terraform ${{ github.event.inputs.action }} -auto-approve -var-file=${{ github.event.inputs.tfvars_file }} -input=false
