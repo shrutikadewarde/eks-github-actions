@@ -47,7 +47,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: eks
+        working-directory: EKS
 
     env:
       AWS_REGION: ap-south-1
