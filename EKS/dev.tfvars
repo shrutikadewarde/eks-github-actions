@@ -2,6 +2,7 @@ env                   = "dev"
 aws-region            = "ap-south-1"
 vpc-cidr-block        = "10.16.0.0/16"
 vpc-name              = "vpc"
+vpc_id                = "vpc-06800d1ec9c8cdf73"
 igw-name              = "igw"
 pub-subnet-count      = 3
 pub-cidr-block        = ["10.16.0.0/20", "10.16.16.0/20", "10.16.32.0/20"]
