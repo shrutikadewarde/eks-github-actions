@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 module "EKS" {
-  source = "eks-github-actions/EKS/" # Adjust if your module is in another path
+  source = "./EKS" # Adjust if your module is in another path
 
   # General settings
   aws-region               = var.aws-region
