@@ -14,7 +14,6 @@ resource "aws_internet_gateway" "igw" {
     "kubernetes.io/cluster/${local.cluster-name}" = "owned"
   }
 
-  depends_on = [aws_vpc.vpc]
 }
 
 resource "aws_subnet" "public-subnet" {
@@ -31,8 +30,8 @@ resource "aws_subnet" "public-subnet" {
     "kubernetes.io/role/elb"                      = "1"
   }
 
-  depends_on = [aws_vpc.vpc,
-  ]
+
+  
 }
 
 resource "aws_subnet" "private-subnet" {
@@ -49,8 +48,7 @@ resource "aws_subnet" "private-subnet" {
     "kubernetes.io/role/internal-elb"             = "1"
   }
 
-  depends_on = [aws_vpc.vpc,
-  ]
+
 }
 
 
@@ -67,8 +65,7 @@ resource "aws_route_table" "public-rt" {
     env  = var.env
   }
 
-  depends_on = [aws_vpc.vpc
-  ]
+  
 }
 
 resource "aws_route_table_association" "name" {
@@ -88,9 +85,7 @@ resource "aws_eip" "ngw-eip" {
     Name = var.eip-name
   }
 
-  depends_on = [aws_vpc.vpc
-  ]
-
+  
 }
 
 resource "aws_nat_gateway" "ngw" {
@@ -119,8 +114,7 @@ resource "aws_route_table" "private-rt" {
     env  = var.env
   }
 
-  depends_on = [aws_vpc.vpc,
-  ]
+  
 }
 
 resource "aws_route_table_association" "private-rt-association" {
