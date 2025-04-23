@@ -2,7 +2,7 @@ provider "aws" {
   region = var.aws_region
 }
 
-module "eks" {
+module "EKS" 
   source = "../module"
 
   # General settings
