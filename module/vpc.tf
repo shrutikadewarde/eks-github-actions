@@ -73,8 +73,7 @@ resource "aws_route_table_association" "name" {
   route_table_id = aws_route_table.public-rt.id
   subnet_id      = aws_subnet.public-subnet[count.index].id
 
-  depends_on = [aws_vpc.vpc,
-    aws_subnet.public-subnet
+  depends_on = [aws_subnet.public-subnet
   ]
 }
 
@@ -96,8 +95,7 @@ resource "aws_nat_gateway" "ngw" {
     Name = var.ngw-name
   }
 
-  depends_on = [aws_vpc.vpc,
-    aws_eip.ngw-eip
+  depends_on = [aws_eip.ngw-eip
   ]
 }
 
@@ -122,8 +120,7 @@ resource "aws_route_table_association" "private-rt-association" {
   route_table_id = aws_route_table.private-rt.id
   subnet_id      = aws_subnet.private-subnet[count.index].id
 
-  depends_on = [aws_vpc.vpc,
-    aws_subnet.private-subnet
+  depends_on = [aws_subnet.private-subnet
   ]
 }
 
