@@ -5,7 +5,8 @@ locals {
 
 
 resource "aws_internet_gateway" "igw" {
-  vpc_id = aws_vpc.vpc.id
+  vpc_id = var.vpc_id
+
 
   tags = {
     Name                                          = var.igw-name
@@ -18,7 +19,7 @@ resource "aws_internet_gateway" "igw" {
 
 resource "aws_subnet" "public-subnet" {
   count                   = var.pub-subnet-count
-  vpc_id                  = aws_vpc.vpc.id
+  vpc_id                  = var.vpc_id
   cidr_block              = element(var.pub-cidr-block, count.index)
   availability_zone       = element(var.pub-availability-zone, count.index)
   map_public_ip_on_launch = true
@@ -36,7 +37,7 @@ resource "aws_subnet" "public-subnet" {
 
 resource "aws_subnet" "private-subnet" {
   count                   = var.pri-subnet-count
-  vpc_id                  = aws_vpc.vpc.id
+  vpc_id                  = var.vpc_id
   cidr_block              = element(var.pri-cidr-block, count.index)
   availability_zone       = element(var.pri-availability-zone, count.index)
   map_public_ip_on_launch = false
@@ -54,7 +55,7 @@ resource "aws_subnet" "private-subnet" {
 
 
 resource "aws_route_table" "public-rt" {
-  vpc_id = aws_vpc.vpc.id
+  vpc_id = var.vpc_id
 
   route {
     cidr_block = "0.0.0.0/0"
@@ -106,7 +107,7 @@ resource "aws_nat_gateway" "ngw" {
 }
 
 resource "aws_route_table" "private-rt" {
-  vpc_id = aws_vpc.vpc.id
+  vpc_id = var.vpc_id
 
   route {
     cidr_block     = "0.0.0.0/0"
@@ -136,7 +137,7 @@ resource "aws_security_group" "eks-cluster-sg" {
   name        = var.eks-sg
   description = "Allow 443 from Jump Server only"
 
-  vpc_id = aws_vpc.vpc.id
+  vpc_id = var.vpc_id
 
   ingress {
     from_port   = 443
