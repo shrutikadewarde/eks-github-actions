@@ -5,6 +5,12 @@ variable "vpc-cidr-block" {}
 variable "vpc-name" {}
 variable "igw-name" {}
 variable "pub-subnet-count" {}
+# EKS/variables.tf
+variable "vpc_id" {
+  description = "ID of the existing VPC to use"
+  type        = string
+}
+
 variable "pub-cidr-block" {
   type = list(string)
 }
