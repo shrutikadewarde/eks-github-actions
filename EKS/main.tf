@@ -43,5 +43,3 @@ module "EKS" {
 
   addons = var.addons
 }
-
-}
