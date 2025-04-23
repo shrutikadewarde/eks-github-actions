@@ -10,6 +10,7 @@ module "EKS" {
   cluster-name          = "${local.env}-${local.org}-${var.cluster-name}"
   cidr-block            = var.vpc-cidr-block
   vpc-name              = "${local.env}-${local.org}-${var.vpc-name}"
+  vpc-id                = var.vpc_id
   igw-name              = "${local.env}-${local.org}-${var.igw-name}"
   pub-subnet-count      = var.pub-subnet-count
   pub-cidr-block        = var.pub-cidr-block
