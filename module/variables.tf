@@ -43,6 +43,7 @@ variable "addons" {
     name    = string
     version = string
   }))
+  description = "List of addons to be installed on the EKS cluster"
 }
 variable "ondemand_instance_types" {}
 variable "spot_instance_types" {}
