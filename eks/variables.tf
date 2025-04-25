@@ -31,7 +31,9 @@ variable "pri_sub_name" {}
 
 variable "public_rt_name" {}
 variable "private_rt_name" {}
-variable "eip_name" {}
+variable "eip_name" {
+  type = string
+}
 variable "ngw_name" {}
 variable "eks_sg" {}
 
