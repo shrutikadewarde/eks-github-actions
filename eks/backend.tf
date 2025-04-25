@@ -11,11 +11,11 @@ terraform {
     region         = "us-east-1"
     key            = "eks/terraform.tfstate"
     encrypt        = true
-    dynamodb_table = "Lock_Files"
+    use_lockfile   = true
   }
 } 
 
 provider "aws" {
-  region  = var.aws-region
+  region  = var.aws_region
 }
 
