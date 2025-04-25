@@ -1,10 +1,6 @@
 variable "cluster-name" {}
 variable "cidr-block" {}
 variable "vpc-name" {}
-variable "vpc_id" {
-  description = "ID of the existing VPC to use"
-  type        = string
-}
 variable "env" {}
 variable "igw-name" {}
 variable "pub-subnet-count" {}
