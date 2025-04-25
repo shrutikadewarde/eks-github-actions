@@ -29,20 +29,6 @@ resource "aws_iam_openid_connect_provider" "eks_oidc" {
   url             = data.tls_certificate.eks_certificate.url
 }
 
-# AddOns for EKS Cluster
-resource "aws_eks_addon" "eks_addons" {
-  for_each      = { for idx, addon in var.addons : idx => addon }
-  cluster_name  = aws_eks_cluster.eks[0].name
-  addon_name    = each.value.name
-  addon_version = each.value.version
-
-  depends_on = [
-    aws_eks_node_group.ondemand-node,
-    aws_eks_node_group.spot-node
-  ]
-}
-
-
 # NodeGroups
 resource "aws_eks_node_group" "ondemand_node" {
   cluster_name    = aws_eks_cluster.eks[0].name
@@ -56,7 +42,11 @@ resource "aws_eks_node_group" "ondemand_node" {
     max_size     = var.max_capacity_on_demand
   }
 
-  subnet_ids = [aws_subnet.private_subnet[0].id, aws_subnet.private_subnet[1].id, aws_subnet.private_subnet[2].id]
+  subnet_ids = [
+    aws_subnet.private_subnet[0].id,
+    aws_subnet.private_subnet[1].id,
+    aws_subnet.private_subnet[2].id
+  ]
 
   instance_types = var.ondemand_instance_types
   capacity_type  = "ON_DEMAND"
@@ -67,6 +57,7 @@ resource "aws_eks_node_group" "ondemand_node" {
   update_config {
     max_unavailable = 1
   }
+
   tags = {
     "Name" = "${var.cluster_name}-ondemand_nodes"
   }
@@ -86,7 +77,11 @@ resource "aws_eks_node_group" "spot_node" {
     max_size     = var.max_capacity_spot
   }
 
-  subnet_ids = [aws_subnet.private_subnet[0].id, aws_subnet.private_subnet[1].id, aws_subnet.private_subnet[2].id]
+  subnet_ids = [
+    aws_subnet.private_subnet[0].id,
+    aws_subnet.private_subnet[1].id,
+    aws_subnet.private_subnet[2].id
+  ]
 
   instance_types = var.spot_instance_types
   capacity_type  = "SPOT"
@@ -94,15 +89,32 @@ resource "aws_eks_node_group" "spot_node" {
   update_config {
     max_unavailable = 1
   }
+
   tags = {
     "Name" = "${var.cluster_name}-spot_nodes"
   }
+
   labels = {
     type      = "spot"
     lifecycle = "spot"
   }
+
   disk_size = 50
 
   depends_on = [aws_eks_cluster.eks]
 }
+
+# AddOns for EKS Cluster
+resource "aws_eks_addon" "eks_addons" {
+  for_each      = { for idx, addon in var.addons : idx => addon }
+  cluster_name  = aws_eks_cluster.eks[0].name
+  addon_name    = each.value.name
+  addon_version = each.value.version
+
+  depends_on = [
+    aws_eks_node_group.ondemand_node,
+    aws_eks_node_group.spot_node
+  ]
+}
+
 
