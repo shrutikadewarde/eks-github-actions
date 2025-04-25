@@ -54,5 +54,4 @@ variable "addons" {
     # Add more fields if needed (e.g. version, config, etc.)
   }))
 }
-}
  
