@@ -1,5 +1,7 @@
 variable "aws_region" {}
-variable "env" {}
+variable "env" {
+ type = string
+}
 variable "cluster_name" {}
 variable "vpc_cidr_block" {}
 variable "vpc_name" {}
@@ -34,7 +36,9 @@ variable "ngw_name" {}
 variable "eks_sg" {}
 
 # EKS
-variable "is_eks_cluster_enabled" {}
+variable "is_eks_cluster_enabled" {
+  type = bool
+}
 variable "cluster_version" {}
 variable "endpoint_private_access" {}
 variable "endpoint_public_access" {}
@@ -44,7 +48,9 @@ variable "ondemand_instance_types" {
 }
 
 variable "spot_instance_types" {}
-variable "desired_capacity_on_demand" {}
+variable "desired_capacity_on_demand" {
+ type = number
+}
 variable "min_capacity_on_demand" {}
 variable "max_capacity_on_demand" {}
 
