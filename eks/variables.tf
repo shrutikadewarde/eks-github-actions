@@ -11,7 +11,7 @@ variable "pub_subnet_count" {}
 variable "pub_cidr_block" {
   type = list(string)
 }
-variable "eip-name" {
+variable "eip_name" {
   type = string
 }
 
