@@ -19,40 +19,33 @@ pipeline {
         }
         stage('Git Pulling') {
             steps {
-                git branch: 'master', url: 'https://github.com/shrutikadewarde/eks-github-actions.git'
+                git branch: 'master', url: 'https://github.com/AmanPathak-DevOps/EKS-Terraform-GitHub-Actions.git'
             }
         }
         stage('Init') {
             steps {
-                withAWS(credentials: 'aws-credentials', region: 'ap-south-1') {
-                sh '''
-                echo "Running terraform Init"
-                cd EKS
-                terraform init -reconfigure
-                '''
+                withAWS(credentials: 'aws-creds', region: 'us-east-1') {
+                sh 'terraform -chdir=eks/ init'
                 }
             }
         }
         stage('Validate') {
             steps {
-                withAWS(credentials: 'aws-credentials', region: 'ap-south-1') {
-                sh '''
-                 cd eks
-                 terraform validate
-                '''
+                withAWS(credentials: 'aws-creds', region: 'us-east-1') {
+                sh 'terraform -chdir=eks/ validate'
                 }
             }
         }
         stage('Action') {
             steps {
-                withAWS(credentials: 'aws-credentials', region: 'ap-south-1') {
+                withAWS(credentials: 'aws-creds', region: 'us-east-1') {
                     script {    
                         if (params.Terraform_Action == 'plan') {
-                            sh "terraform -chdir=EKS/ plan -var-file=${params.Environment}.tfvars"
+                            sh "terraform -chdir=eks/ plan -var-file=${params.Environment}.tfvars"
                         }   else if (params.Terraform_Action == 'apply') {
-                            sh "terraform -chdir=EKS/ apply -var-file=${params.Environment}.tfvars -auto-approve"
+                            sh "terraform -chdir=eks/ apply -var-file=${params.Environment}.tfvars -auto-approve"
                         }   else if (params.Terraform_Action == 'destroy') {
-                            sh "terraform -chdir=EKS/ destroy -var-file=${params.Environment}.tfvars -auto-approve"
+                            sh "terraform -chdir=eks/ destroy -var-file=${params.Environment}.tfvars -auto-approve"
                         } else {
                             error "Invalid value for Terraform_Action: ${params.Terraform_Action}"
                         }
