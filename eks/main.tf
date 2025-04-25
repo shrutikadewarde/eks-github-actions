@@ -40,6 +40,15 @@ module "eks" {
   endpoint_private_access       = var.endpoint_private_access
   endpoint_public_access        = var.endpoint_public_access
 
-  addons = var.addons
+   addons = [
+    {
+      name    = "vpc-cni"
+      version = "1.9.0"
+    },
+    {
+      name    = "kube-proxy"
+      version = "1.21.0"
+    }
+  ]
 }
 
