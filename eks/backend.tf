@@ -7,7 +7,7 @@ terraform {
     }
   }
   backend "s3" {
-    bucket         = "dev-s3-bucket-mum"
+    bucket         = "dev-s3-bucket-shrutika"
     region         = "us-east-1"
     key            = "eks/terraform.tfstate"
     encrypt        = true
