@@ -9,6 +9,10 @@ variable "pub_subnet_count" {}
 variable "pub_cidr_block" {
   type = list(string)
 }
+variable "eip-name" {
+  type = string
+}
+
 variable "pub_availability_zone" {
   type = list(string)
 }
